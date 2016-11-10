@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+ <head>
+   <title>Tic Tac Toe</title>
+   <style>
+     body {background-color: lightpink;}
+     .table {border: 10px solid black; width: 100px; height: 400px;}
+     input {height: 90px; width: 90px; border: 2px solid grey; font-size: 80px; text-align: center;}
+
+   </style>
+   <script src="/socket.io/socket.io.js"></script>
+   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+   <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-resource.min.js"></script>
+   <script>
+     var socket = io();
+     window.onload = function(){
+       var inputs = document.querySelectorAll("input");
+       for(var x = inputs.length - 1; x >= 0; x--){
+         inputs[x].addEventListener("keyup", function(){
+           socket.emit("move", [this.id, this.value]);
+         });
+       }
+       document.getElementById("reset").addEventListener("click", function(){
+         socket.emit("reset");
+       });
+       socket.on("update", function(newData){
+         document.getElementById(newData[0]).value = newData[1];
+       });
+       socket.on("reset", function(){
+         for(var x = inputs.length - 1; x >= 0; x--){
+           inputs[x].value = "";
+         }
+       });
+     };
+   </script>
+ </head>
+ <body>
+
+   <h1>Tic Tac Toe</h1>
+
+   <table class="table">
+     {{#each rows}}
+     <tr>
+       <td><input id="x0_y{{_id}}" value="{{space0}}" /></td>
+       <td><input id="x1_y{{_id}}" value="{{space1}}" /></td>
+       <td><input id="x2_y{{_id}}" value="{{space2}}" /></td>
+     </tr>
+     {{/each}}
+   </table>
+
+   <button id="reset">Reset</button>
+   <script src="/socket.io/socket.io.js"></script>
+   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
+   <script>
+     var socket = io();
+     $('form').submit(function(){
+       socket.emit('chat message', $('#m').val());
+       $('#m').val('');
+       return false;
+     });
+   </script>
+ </body>
+</html>
