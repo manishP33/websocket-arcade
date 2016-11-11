@@ -4,12 +4,11 @@
    <title>Tic Tac Toe</title>
    <style>
      body {background-color: lightpink;}
-     .table {border: 10px solid black; width: 100px; height: 400px;}
+     .table {border: 10px solid black; width: 390px; height: 400px;}
      input {height: 90px; width: 90px; border: 2px solid grey; font-size: 80px; text-align: center;}
-
+     #m {height: 20px; width: 500px; font-size: 15px;}
    </style>
    <script src="/socket.io/socket.io.js"></script>
-   <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular-resource.min.js"></script>
    <script>
@@ -49,7 +48,13 @@
      {{/each}}
    </table>
    <button id="reset">Reset</button>
-   <script src="/socket.io/socket.io.js"></script>
+   <ul id="messages">
+           <li>{{message}}</li>
+         </ul>
+   <form>
+        <input id="m" autocomplete="off" /><button>Send</button>
+  </form>
+
    <script src="http://code.jquery.com/jquery-1.11.1.js"></script>
    <script>
      var socket = io();
@@ -61,3 +66,4 @@
    </script>
  </body>
 </html>
+
